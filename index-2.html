@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>English Learning Platform</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.2/babel.min.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet"/>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Inter', sans-serif; background-color: #efe7de; }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script type="text/babel">
+    function App() {
+      const [page, setPage] = React.useState('home');
+      const [selectedStep, setSelectedStep] = React.useState(null);
+
+      const steps = [
+        { title: 'Basic English',    desc: 'Learn simple English words and greetings.' },
+        { title: 'Grammar',          desc: 'Understand grammar and sentence making.' },
+        { title: 'Speaking',         desc: 'Practice speaking English confidently.' },
+        { title: 'Writing',          desc: 'Improve your English writing skills.' },
+        { title: 'Advanced English', desc: 'Master fluent English communication.' },
+      ];
+
+      const stepColors = ['#d07a5b', '#d8a03d', '#6d8b74', '#d07a5b', '#d8a03d'];
+
+      const lessons = Array.from({ length: 25 }, (_, i) => ({
+        title: `Lesson ${i + 1}`,
+        topics: Array.from({ length: 25 }, (_, j) => `Step ${j + 1}`),
+      }));
+
+      /* ── LESSON DETAIL PAGE ── */
+      if (selectedStep !== null) return (
+        <div style={{minHeight:'100vh', background:'#efe7de', padding:'24px', fontFamily:'Inter,sans-serif'}}>
+          <div style={{maxWidth:'1200px', margin:'0 auto'}}>
+            <button onClick={() => setSelectedStep(null)}
+              style={{marginBottom:'24px', padding:'10px 20px', borderRadius:'999px',
+                background:'#12343b', color:'#fff', border:'none', cursor:'pointer', fontSize:'15px'}}>
+              ← Back
+            </button>
+
+            <div style={{background:'#12343b', borderRadius:'35px', padding:'40px', color:'#fff', boxShadow:'0 20px 60px rgba(0,0,0,0.3)'}}>
+              <h1 style={{fontSize:'48px', fontWeight:'800', marginBottom:'12px'}}>{steps[selectedStep].title}</h1>
+              <p style={{fontSize:'17px', color:'#ccc', marginBottom:'36px'}}>Complete all 25 lessons step by step.</p>
+
+              <div style={{display:'grid', gridTemplateColumns:'repeat(auto-fill,minmax(300px,1fr))', gap:'20px'}}>
+                {lessons.map((lesson, i) => (
+                  <div key={i} style={{background:'#fff', color:'#12343b', borderRadius:'24px', padding:'20px',
+                    boxShadow:'0 4px 20px rgba(0,0,0,0.15)', transition:'transform .2s'}}
+                    onMouseEnter={e=>e.currentTarget.style.transform='scale(1.03)'}
+                    onMouseLeave={e=>e.currentTarget.style.transform='scale(1)'}>
+                    <div style={{fontSize:'28px', fontWeight:'800', color:'#ff9f1c', marginBottom:'8px'}}>{i+1}</div>
+                    <h2 style={{fontWeight:'700', fontSize:'16px'}}>{lesson.title}</h2>
+                    <p style={{fontSize:'13px', color:'#666', marginTop:'6px'}}>This lesson contains 25 mini learning steps.</p>
+                    <div style={{marginTop:'14px', display:'grid', gridTemplateColumns:'repeat(5,1fr)', gap:'6px'}}>
+                      {lesson.topics.map((t, j) => (
+                        <button key={j}
+                          onClick={() => { if(j === 0) window.location.href = 'verb-quiz-bold.html'; }}
+                          style={{background: j === 0 ? '#ff9f1c' : '#efe7de',
+                          color: j === 0 ? '#fff' : '#12343b', textAlign:'center',
+                          borderRadius:'10px', padding:'6px 2px', fontSize:'11px', fontWeight:'600',
+                          border:'none', cursor: j === 0 ? 'pointer' : 'default'}}>
+                          {t}
+                        </button>
+                      ))}
+                    </div>
+                    <button style={{marginTop:'14px', background:'#12343b', color:'#fff',
+                      padding:'8px 18px', borderRadius:'999px', border:'none', cursor:'pointer', fontSize:'13px'}}>
+                      Start Lesson
+                    </button>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      );
+
+      /* ── STEPS PAGE ── */
+      if (page === 'steps') return (
+        <div style={{minHeight:'100vh', background:'#efe7de', padding:'24px', fontFamily:'Inter,sans-serif'}}>
+          <div style={{maxWidth:'1200px', margin:'0 auto'}}>
+            <button onClick={() => setPage('home')}
+              style={{marginBottom:'24px', padding:'10px 20px', borderRadius:'999px',
+                background:'#12343b', color:'#fff', border:'none', cursor:'pointer', fontSize:'15px'}}>
+              ← Back
+            </button>
+
+            <div style={{background:'#12343b', borderRadius:'35px', padding:'40px', color:'#fff',
+              boxShadow:'0 20px 60px rgba(0,0,0,0.3)', marginBottom:'36px',
+              display:'flex', flexWrap:'wrap', alignItems:'center', justifyContent:'space-between', gap:'32px'}}>
+              <div style={{maxWidth:'480px'}}>
+                <h1 style={{fontSize:'44px', fontWeight:'800', lineHeight:'1.2', marginBottom:'16px'}}>
+                  Learn English Step By Step
+                </h1>
+                <p style={{fontSize:'17px', color:'#ccc', marginBottom:'20px'}}>
+                  Click any step below and start your English learning journey.
+                </p>
+                <div style={{display:'flex', gap:'12px', flexWrap:'wrap'}}>
+                  <span style={{background:'#fff', color:'#12343b', padding:'10px 20px', borderRadius:'14px', fontWeight:'700'}}>5 Main Steps</span>
+                  <span style={{background:'#ff9f1c', color:'#fff', padding:'10px 20px', borderRadius:'14px', fontWeight:'700'}}>25 Lessons Each</span>
+                </div>
+              </div>
+              <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=800&auto=format&fit=crop"
+                alt="Students" style={{borderRadius:'24px', width:'100%', maxWidth:'420px', boxShadow:'0 12px 40px rgba(0,0,0,0.4)'}}/>
+            </div>
+
+            <div style={{display:'grid', gridTemplateColumns:'repeat(auto-fill,minmax(200px,1fr))', gap:'20px'}}>
+              {steps.map((step, i) => (
+                <div key={i} onClick={() => setSelectedStep(i)}
+                  style={{background: stepColors[i], borderRadius:'28px', padding:'28px', color:'#fff',
+                    cursor:'pointer', boxShadow:'0 8px 30px rgba(0,0,0,0.2)', transition:'transform .2s'}}
+                  onMouseEnter={e=>e.currentTarget.style.transform='scale(1.05)'}
+                  onMouseLeave={e=>e.currentTarget.style.transform='scale(1)'}>
+                  <div style={{fontSize:'44px', fontWeight:'800', marginBottom:'12px'}}>0{i+1}</div>
+                  <h2 style={{fontSize:'22px', fontWeight:'700', marginBottom:'10px'}}>{step.title}</h2>
+                  <p style={{fontSize:'14px', lineHeight:'1.6', marginBottom:'20px'}}>{step.desc}</p>
+                  <button style={{background:'#fff', color:'#12343b', padding:'8px 18px',
+                    borderRadius:'999px', border:'none', fontWeight:'700', cursor:'pointer', fontSize:'14px'}}>
+                    Open Step
+                  </button>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      );
+
+      /* ── HOME PAGE ── */
+      return (
+        <div style={{minHeight:'100vh', background:'#efe7de', padding:'24px', fontFamily:'Inter,sans-serif'}}>
+          <div style={{maxWidth:'1200px', margin:'0 auto', background:'#12343b',
+            borderRadius:'40px', overflow:'hidden', boxShadow:'0 20px 60px rgba(0,0,0,0.3)'}}>
+            <div style={{display:'grid', gridTemplateColumns:'repeat(auto-fit,minmax(300px,1fr))',
+              gap:'40px', alignItems:'center', padding:'60px'}}>
+              <div>
+                <span style={{background:'#ff9f1c', color:'#fff', padding:'8px 20px',
+                  borderRadius:'999px', fontWeight:'700', fontSize:'14px', display:'inline-block', marginBottom:'24px'}}>
+                  English Learning Platform
+                </span>
+                <h1 style={{fontSize:'52px', fontWeight:'800', color:'#fff', lineHeight:'1.15', marginBottom:'20px'}}>
+                  Learn English Easily & Build Your Confidence
+                </h1>
+                <p style={{color:'#bbb', fontSize:'17px', lineHeight:'1.7', marginBottom:'32px'}}>
+                  Start your English journey with interactive lessons, easy steps, and professional guidance designed for beginners.
+                </p>
+                <div style={{display:'flex', flexWrap:'wrap', gap:'16px', marginBottom:'36px'}}>
+                  {[['5+','Main Steps'],['125+','Total Lessons'],['100%','Easy Learning']].map(([num,label])=>(
+                    <div key={label} style={{background:'rgba(255,255,255,0.1)', borderRadius:'16px',
+                      padding:'16px 24px', color:'#fff', backdropFilter:'blur(10px)'}}>
+                      <div style={{fontSize:'28px', fontWeight:'800'}}>{num}</div>
+                      <div style={{fontSize:'13px', color:'#aaa'}}>{label}</div>
+                    </div>
+                  ))}
+                </div>
+                <button onClick={() => setPage('steps')}
+                  style={{background:'#ff9f1c', color:'#fff', padding:'16px 36px', borderRadius:'999px',
+                    border:'none', fontSize:'17px', fontWeight:'700', cursor:'pointer',
+                    boxShadow:'0 8px 30px rgba(255,159,28,0.4)', transition:'background .2s'}}
+                  onMouseEnter={e=>e.currentTarget.style.background='#e68900'}
+                  onMouseLeave={e=>e.currentTarget.style.background='#ff9f1c'}>
+                  Start Learning →
+                </button>
+              </div>
+
+              <div style={{position:'relative'}}>
+                <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?q=80&w=800&auto=format&fit=crop"
+                  alt="English Learning" style={{borderRadius:'35px', width:'100%', boxShadow:'0 16px 50px rgba(0,0,0,0.5)'}}/>
+                <div style={{position:'absolute', bottom:'-20px', left:'-20px', background:'#ff9f1c',
+                  color:'#fff', padding:'16px 24px', borderRadius:'24px', boxShadow:'0 8px 30px rgba(0,0,0,0.3)'}}>
+                  <div style={{fontSize:'20px', fontWeight:'800'}}>Beginner Friendly</div>
+                  <div style={{fontSize:'13px'}}>Interactive Learning Experience</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div style={{maxWidth:'1200px', margin:'60px auto 0'}}>
+            <h2 style={{fontSize:'36px', fontWeight:'800', color:'#12343b', textAlign:'center', marginBottom:'36px'}}>
+              Why Learn With Us?
+            </h2>
+            <div style={{display:'grid', gridTemplateColumns:'repeat(auto-fit,minmax(280px,1fr))', gap:'24px'}}>
+              {[
+                {color:'#d07a5b', icon:'📚', title:'Easy Lessons',      desc:'Learn English with easy step-by-step lessons for beginners.'},
+                {color:'#d8a03d', icon:'🎯', title:'Practical Learning', desc:'Practice daily conversations and improve your confidence.'},
+                {color:'#6d8b74', icon:'🚀', title:'Fast Growth',        desc:'Build speaking, writing, and grammar skills quickly.'},
+              ].map(({color,icon,title,desc})=>(
+                <div key={title} style={{background:color, color:'#fff', borderRadius:'28px',
+                  padding:'36px', boxShadow:'0 8px 30px rgba(0,0,0,0.15)'}}>
+                  <div style={{fontSize:'48px', marginBottom:'16px'}}>{icon}</div>
+                  <h3 style={{fontSize:'22px', fontWeight:'700', marginBottom:'10px'}}>{title}</h3>
+                  <p style={{fontSize:'15px', lineHeight:'1.6'}}>{desc}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+  </script>
+</body>
+</html>
